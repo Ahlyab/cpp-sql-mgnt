@@ -1,1 +1,1 @@
-# cpp-sql-mgnt
+# python-sql-mgnt
