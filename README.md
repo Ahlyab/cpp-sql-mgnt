@@ -1,1 +1,1 @@
-# python-sql-mgnt
+# python-sql-management
