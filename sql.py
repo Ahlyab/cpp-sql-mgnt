@@ -19,10 +19,12 @@ for i in range(0, n):
     print("information inserted successfully")
 
 #printing rows
-for row in cur.execute("SELECT user_id FROM user"):
-    print(row)
+for row in cur.execute("SELECT * FROM user"):
+    print(f"Username : {row[0]} \nPassword : {row[1]}" )
+    print("----------------------------------")
 
-#cur.execute("DROP TABLE user")
+tuple1 = ("car", "bike", "bus")
+print(tuple1)
 
 con.commit()
 con.close()
