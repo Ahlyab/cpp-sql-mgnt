@@ -1,37 +1,49 @@
-import os
-import mysql.connector
-from mysql.connector import Error
-import pandas as pd
-from dotenv import load_dotenv
-load_dotenv()
+import sqlite3
 
 
-def create_db_connection(host_name, user_name, user_password, db_name):
+def createDbConnection(db_name):
     connection = None
     try:
-        connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            passwd=user_password,
-            database=db_name
-        )
-        print("MySQL Database connection successful")
-    except Error as err:
+        connection = sqlite3.connect(database=db_name)
+        print("SQLite Database connection successful")
+    except sqlite3.Error as err:
         print(f"Error: '{err}'")
 
     return connection
 
 
-def execute_query(connection, query):
+connection = createDbConnection("users.db")
+
+
+def executeQuery(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
         connection.commit()
-        print("Query successful")
-    except Error as err:
+        return True
+    except sqlite3.Error as err:
         print(f"Error: '{err}'")
+        return False
 
 
-connection = create_db_connection("localhost", "root", os.getenv("pw"), "test")
-createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS test"
-execute_query(connection, createDatabaseQuery)
+def checkIfUserExists(username):
+    query = f"SELECT * FROM users WHERE username='{username}'"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    if cursor.fetchone():
+        return True
+    return False
+
+
+def createUser(username, password):
+    query = f"INSERT INTO users (username, password) VALUES ('{username}', '{password}')"
+    executeQuery(connection, query)
+
+
+def clearDb():
+    """this will permanently delete the database, use with caution"""
+
+    query = "DELETE FROM users"
+    executeQuery(connection, query)
+    query = "DELETE FROM sqlite_sequence WHERE name='users'"
+    executeQuery(connection, query)
