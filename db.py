@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def create_db_connection(db_name):
+def createDbConnection(db_name):
     connection = None
     try:
         connection = sqlite3.connect(database=db_name)
@@ -12,7 +12,7 @@ def create_db_connection(db_name):
     return connection
 
 
-def execute_query(connection, query):
+def executeQuery(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -22,7 +22,7 @@ def execute_query(connection, query):
         print(f"Error: '{err}'")
 
 
-connection = create_db_connection("users.db")
+connection = createDbConnection("users.db")
 createDatabaseQuery = """
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,4 +30,4 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT NOT NULL
 );
 """
-execute_query(connection, createDatabaseQuery)
+executeQuery(connection, createDatabaseQuery)
