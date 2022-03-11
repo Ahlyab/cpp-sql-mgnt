@@ -9,17 +9,10 @@ class User:
             password.encode()).hexdigest()  # hashed password
 
     def signup(self):
-        if(db.checkIfUserExists(self.username)):
-            print("User already exists")
-        else:
-            db.createUser(self.username, self.password)
-            print("User created")
+        db.createUser(self.username, self.password)
 
     def login(self):
-        if(db.checkIfUserExists(self.username)):
-            if(db.getUserPassword(self.username) == self.password):
-                print("Login successful")
-            else:
-                print("Incorrect password")
+        if(db.getUserPassword(self.username) == self.password):
+            print("Login successful")
         else:
-            print("User does not exist")
+            print("Incorrect password")
