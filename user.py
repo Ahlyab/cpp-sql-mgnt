@@ -16,9 +16,10 @@ class User:
             print("User created")
 
     def login(self):
-        print("Logging in")
-        # TODO: Implement login and check against database
-
-
-user = User("joe", "mama")
-user.signup()
+        if(db.checkIfUserExists(self.username)):
+            if(db.getUserPassword(self.username) == self.password):
+                print("Login successful")
+            else:
+                print("Incorrect password")
+        else:
+            print("User does not exist")

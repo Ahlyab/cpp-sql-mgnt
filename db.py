@@ -40,6 +40,13 @@ def createUser(username, password):
     executeQuery(connection, query)
 
 
+def getUserPassword(username):
+    query = f"SELECT password FROM users WHERE username='{username}'"
+    cursor = connection.cursor()
+    cursor.execute(query)
+    return cursor.fetchone()[0]
+
+
 def clearDb():
     """this will permanently delete the database, use with caution"""
 
