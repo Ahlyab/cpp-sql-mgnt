@@ -54,3 +54,8 @@ def clearDb():
     executeQuery(connection, query)
     query = "DELETE FROM sqlite_sequence WHERE name='users'"
     executeQuery(connection, query)
+
+
+def changePassword(username, newPassword):
+    query = f"UPDATE users SET password='{newPassword}' WHERE username='{username}'"
+    executeQuery(connection, query)
